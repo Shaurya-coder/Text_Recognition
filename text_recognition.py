@@ -10,7 +10,7 @@ import json
 import time
 import requests
 ENDPOINT = "{endpoint}/vision/v3.1/read/analyze"
-IMAGE_PATH = "/Users/shauryakanda/Desktop/Archive/Aadhar1.png"
+IMAGE_PATH = "/Users/shaurya/Desktop/Archive/Aadhar1.png"
 API_KEY = "you api key"
 
 def send_data(API_KEY,ENDPOINT,IMAGE_PATH):
