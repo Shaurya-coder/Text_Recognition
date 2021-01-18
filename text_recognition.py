@@ -6,34 +6,35 @@ Python 3rd Party Modules:-
 1. requests module (pip install requests)
 """
 
-import json
+import json# to convert json to python dictionary
 import time
-import requests
-ENDPOINT = "{endpoint}/vision/v3.1/read/analyze"
-IMAGE_PATH = "/Users/shaurya/Desktop/Archive/Aadhar1.png"
-API_KEY = "you api key"
+import requests# to make requests to the api
+ENDPOINT = "{your endpoint}/vision/v3.1/read/analyze"
+API_KEY = "your api key"
+IMAGE_PATH = "ocr_sample.png"
 
 def send_data(API_KEY,ENDPOINT,IMAGE_PATH):
     f = open(IMAGE_PATH,'rb')
     data = f.read()
     params   = {
-                    'language': "en",
-                    'detectOrientation ': 'true'
-                }
-
+    'language': "en",
+    'detectOrientation ': 'true'
+    }
     headers = {'Ocp-Apim-Subscription-Key':API_KEY,
-
     'Content-Type': 'application/octet-stream'}
-    r = requests.post(ENDPOINT,data=data,headers = headers,params = params)
-    str_post = str(r)
-    results = r.headers
-    get_url = results.get('Operation-Location')
+    post_request = requests.post(ENDPOINT, data=data, headers = headers, params = params)
+    results = post_request.headers# getting the headers
 
-    time.sleep(.50)# read api takes some time to return the response
-    get_requests = requests.get(get_url,headers=headers)
-    text = get_requests.text
-    returned_json = json.loads(text)
-    return returned_json
+    get_url = results.get('Operation-Location')
+    time.sleep(.50)# wait until the response is returned
+    get_request = requests.get(get_url, headers=headers)
+
+    returned_json = get_request.text
+
+    returned_dict = json.loads(returned_json)# converting the json to python dict
+    return returned_dict
+
+
 
 def parse_json(returned_json):
     parsed_text = ""
@@ -50,4 +51,3 @@ if __name__=="__main__":
     returned_data = send_data(API_KEY,ENDPOINT,IMAGE_PATH)
     extracted_text = parse_json(returned_data)
     print(extracted_text)
-
