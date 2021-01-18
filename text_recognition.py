@@ -2,6 +2,7 @@
 Goal:-
 To extract text from an image using
 azure read api
+
 Python 3rd Party Modules:-
 1. requests module (pip install requests)
 """
